@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using api.Data;
+using System;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("apiContextSql");
+
 builder.Services.AddDbContext<apiContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("apiContextSql")));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 
